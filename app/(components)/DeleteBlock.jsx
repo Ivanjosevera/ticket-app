@@ -8,12 +8,9 @@ const DeleteBlock = ({ id }) => {
   const router = useRouter();
 
   const deleteTicket = async () => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Tickets/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const res = await fetch(`/api/Tickets/${id}`, {
+      method: "DELETE",
+    });
     if (res.ok) {
       router.refresh();
     }
