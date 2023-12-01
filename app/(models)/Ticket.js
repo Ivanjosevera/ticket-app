@@ -1,6 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect(process.env.MONGODB_URI);
+process.on("uncaughtException", function (err) {
+  console.log(err);
+});
+
+mongoose.connect(process.env.ROOT_URL);
 mongoose.Promise = global.Promise;
 
 const ticketSchema = new Schema(
