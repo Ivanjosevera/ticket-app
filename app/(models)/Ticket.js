@@ -4,7 +4,7 @@ process.on("uncaughtException", function (err) {
   console.log(err);
 });
 
-mongoose.connect("https://www.mongodb.com/");
+mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
 
 const ticketSchema = new Schema(
