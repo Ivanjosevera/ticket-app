@@ -13,11 +13,14 @@ const getTickets = async () => {
 };
 
 const Dashboard = async () => {
-  const { tickets } = await getTickets();
+  const tickets = await getTickets();
+  let uniqueCaterogies = []
 
-  const uniqueCaterogies = [
-    ...new Set(tickets?.map(({ category }) => category)),
-  ];
+  if(tickets) {
+    uniqueCaterogies = [
+      ...new Set(tickets?.map(({ category }) => category)),
+    ];
+  }
 
   return (
     <div className="p-5">
