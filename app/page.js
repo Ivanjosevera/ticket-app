@@ -1,43 +1,32 @@
+"use client";
+import { Fragment, useEffect, useState } from "react";
 import TicketCard from "./(components)/TicketCard";
+import axios from "axios";
 
-const getTickets = async () => {
-  try {
-    const res = await fetch(`/api/Tickets`, {
-      cache: "no-store",
-    });
+const Dashboard = () => {
+  const [dataTickets, setDataTickets] = useState([] || null);
 
-    return res.json();
-  } catch (error) {
-    console.log("Failed to get Tickets", error);
-  }
-};
-
-const Dashboard = async () => {
-  const { tickets } = await getTickets();
-
-  const uniqueCaterogies = [
-    ...new Set(tickets?.map(({ category }) => category)),
-  ];
+  useEffect(() => {
+    const getTickets = async () => {
+      const res = await axios.get(`/api/Tickets`, {
+        cache: "no-store",
+      });
+      const { data } = res;
+      if (data) {
+        setDataTickets(data.tickets);
+      }
+    };
+    getTickets();
+  }, [dataTickets]);
 
   return (
     <div className="p-5">
       <div>
-        {tickets &&
-          uniqueCaterogies?.map((uniqueCategory, categoryIndex) => (
-            <div key={categoryIndex} className="mb-4">
-              <h2>{uniqueCategory}</h2>
-              <div className="lg:grid grid-cols-2 xl:grid grid-cols-4">
-                {tickets
-                  .filter((ticket) => ticket.category === uniqueCategory)
-                  .map((filteredTicket, _index) => (
-                    <TicketCard
-                      id={_index}
-                      key={_index}
-                      ticket={filteredTicket}
-                    />
-                  ))}
-              </div>
-            </div>
+        {dataTickets &&
+          dataTickets.map((items, index) => (
+            <Fragment key={index}>
+              <p>{items.category}</p>
+            </Fragment>
           ))}
       </div>
     </div>
