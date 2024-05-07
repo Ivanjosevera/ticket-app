@@ -68,7 +68,7 @@ const EditTicketForm = ({ ticket }) => {
   const categories = [
     "Hardware Problem",
     "Software Problem",
-    "Application Development",
+    "Application Deveopment",
     "Project",
   ];
 
